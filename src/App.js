@@ -1,19 +1,24 @@
 import React, { useEffect } from "react";
 import "./App.css";
-import { connect } from "react-redux";
-import { fetchQuestions, fetchUser } from "./state/actions";
+import { useSelector, useDispatch } from "react-redux";
+import { loadQuestions, loadUser } from "./state/actions";
 
-function App({ getQuestions, getUser, questions, users }) {
+function App() {
+  const questions = useSelector(state => state.questions);
+  const users = useSelector(state => state.users)
+  const dispatch = useDispatch();
+
   // load questions on mount
   useEffect(() => {
     function onQuestionsSuccess(res) {
       for (const question of res.questions) {
         // load the user who have asked the question
-        getUser(question.user_id);
+        dispatch(loadUser(question.user_id));
       }
     }
-    getQuestions(onQuestionsSuccess);
+    dispatch(loadQuestions(onQuestionsSuccess));
   }, []); // eslint-disable-line
+
 
   return (
     <div className="App">
@@ -33,16 +38,4 @@ function App({ getQuestions, getUser, questions, users }) {
   );
 }
 
-function mapStateToProps(state) {
-  return {
-    questions: state.questions,
-    users: state.users,
-  };
-}
-
-const mapDispatchToProps = {
-  getQuestions: fetchQuestions,
-  getUser: fetchUser,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;
