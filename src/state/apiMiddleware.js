@@ -2,7 +2,7 @@ const baseUrl = "";
 
 function callApi(endpoint, needAuth = false, config = {}) {
   // add api credentials here
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
   if (needAuth && token) {
     // if there is headers in config, don't override it
     if (config.headers) {
@@ -40,7 +40,14 @@ const apiService = () => (next) => (action) => {
     return next(action);
   }
 
-  let { endpoint, types, needAuth = false, config = {}, onSuccess = null, onFailure = null } = call;
+  let {
+    endpoint,
+    types,
+    needAuth = false,
+    config = {},
+    onSuccess = null,
+    onFailure = null,
+  } = call;
   const [requestType, successType, errorType] = types;
   // dispatching the request
   next({

@@ -16,7 +16,7 @@ function fetchQuestions(onSuccess) {
   };
 }
 
-export function loadQuestions(onSuccess = null) {
+export function loadQuestions(onSuccess) {
   // this is possible because I use redux-thunk middleware
   return function(dispatch, getState) {
     const currentState = getState();
@@ -39,7 +39,7 @@ function fetchUser(userId, onSuccess) {
   };
 }
 
-export function loadUser(userId, onSuccess = null) {
+export function loadUser(userId, onSuccess) {
   return function(dispatch, getState) {
     const currentState = getState();
     // don't make pointless requests
